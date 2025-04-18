@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAISERA - AI-Powered Restaurant Conversations</title>
+    <style>
+        :root {
+            --primary: #c6ff00;
+            --primary-dark: #9ccc00;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --gray: #757575;
+            --light-gray: #e0e0e0;
+            --light: #fafafa;
+            --text: #f5f5f5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Nav */
+        header {
+            background-color: var(--light);
+            padding: 15px 0;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .nav-links {
+            display: flex;
+        }
+        
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            margin-left: 40px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-dark);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
+        .login-btn {
+            color: var(--dark);
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: 500;
+        }
+        
+        .get-started-btn {
+            background-color: var(--dark);
+            color: var(--light);
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .get-started-btn svg {
+            margin-left: 8px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 80px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 50px;
+        }
+        
+        .highlight {
+            background-color: var(--primary);
+            color: var(--dark);
+            padding: 0 10px;
+            border-radius: 6px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            margin-top: 80px;
+        }
+        
+        .stat {
+            display: flex;
+            flex-direction: column;
+            margin: 0 40px;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .stat-label {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .hero-3d {
+            margin-top: 80px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* How it works button */
+        .how-it-works-btn {
+            position: absolute;
+            right: 80px;
+            bottom: 60px;
+            background-color: var(--primary);
+            color: var(--dark);
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+        
+        .how-it-works-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Features Section */
+        .features {
+            background-color: var(--darker);
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            font-size: 60px;
+            line-height: 1.2;
+            margin-bottom: 80px;
+            text-align: center;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 30px;
+            min-height: 240px;
+        }
+        
+        .feature-icons {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .icon-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+        }
+        
+        .icon-circle svg {
+            width: 24px;
+            height: 24px;
+            color: var(--primary);
+        }
+        
+        .feature-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .feature-desc {
+            color: var(--light-gray);
+            font-size: 14px;
+        }
+        
+        /* Demo Section */
+        .demo {
+            padding: 100px 0;
+        }
+        
+        .demo-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+        }
+        
+        .demo-content {
+            flex: 1;
+        }
+        
+        .demo-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        
+        .demo-desc {
+            margin-bottom: 40px;
+            font-size: 18px;
+            color: var(--light-gray);
+        }
+        
+        .demo-img {
+            flex: 1;
+        }
+        
+        .demo-cta {
+            background-color: var(--primary);
+            color: var(--dark);
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .phone-mockup {
+            width: 280px;
+            height: 580px;
+            background: white;
+            border-radius: 30px;
+            padding: 15px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        
+        .phone-screen {
+            background: #f5f5f5;
+            height: 100%;
+            border-radius: 20px;
+            padding: 20px;
+            overflow: auto;
+        }
+        
+        .chat-bubble {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            margin-bottom: 12px;
+            position: relative;
+            word-wrap: break-word;
+        }
+        
+        .bot {
+            background: #E0E0E0;
+            color: #212121;
+            border-top-left-radius: 4px;
+            align-self: flex-start;
+        }
+        
+        .user {
+            background: var(--primary);
+            color: var(--dark);
+            margin-left: auto;
+            border-top-right-radius: 4px;
+            align-self: flex-end;
+        }
+        
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Process Section */
+        .process {
+            padding: 100px 0;
+        }
+        
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+        
+        .process-card {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .process-card-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .process-card-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .process-card-desc {
+            color: var(--light-gray);
+        }
+        
+        /* Pricing Section */
+        .pricing-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .pricing-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .pricing-price {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .pricing-price span {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--light-gray);
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .pricing-features li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pricing-features li::before {
+            content: '•';
+            color: var(--primary);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-right: 5px;
+        }
+        
+        .pricing-btn {
+            background-color: var(--primary);
+            color: var(--dark);
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-weight: 600;
+            display: inline-block;
+            text-align: center;
+            margin-top: auto;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--darker);
+            padding: 60px 0 30px;
+            margin-top: 100px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links li a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links li a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .demo-container {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 42px;
+            }
+            
+            .features-grid, 
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .how-it-works-btn {
+                right: 20px;
+                bottom: 20px;
+                width: 100px;
+                height: 100px;
+                font-size: 14px;
+            }
+            
+            .section-title {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    CAISERA.
+                </div>
+                <div class="nav-links">
+                    <a href="#services">Services</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#about">About</a>
+                    <a href="#insights">Insights</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="auth-buttons">
+                    <a href="#login" class="login-btn">Login</a>
+                    <a href="#get-started" class="get-started-btn">
+                        Get Started
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 1L15 8L8 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M1 8H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>
+                    Turn any restaurant process into a <span class="highlight">conversation.</span>
+                </h1>
+                
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">25K+</div>
+                        <div class="stat-label">Active users</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">AI-powered</div>
+                        <div class="stat-label">Conversations</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">Real-time</div>
+                        <div class="stat-label">Integrations</div>
+                    </div>
+                </div>
+                
+                <!-- 3D visual element -->
+                <div class="hero-3d">
+                    <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="200" cy="200" r="150" fill="#1A1A1A" />
+                        <path d="M200 50C131.2 50 75 106.2 75 175C75 243.8 131.2 300 200 300C268.8 300 325 243.8 325 175C325 106.2 268.8 50 200 50Z" fill="#c6ff00" fill-opacity="0.5" />
+                        <path d="M275 175C275 217.5 237.5 255 195 255C152.5 255 115 217.5 115 175C115 132.5 152.5 95 195 95C237.5 95 275 132.5 275 175Z" fill="#c6ff00" fill-opacity="0.7" />
+                        <path d="M240 175C240 199.85 219.85 220 195 220C170.15 220 150 199.85 150 175C150 150.15 170.15 130 195 130C219.85 130 240 150.15 240 175Z" fill="#c6ff00" />
+                        
+                        <!-- Orbiting paths -->
+                        <circle cx="200" cy="200" r="190" stroke="#444" stroke-width="1" stroke-dasharray="4 4" fill="none" />
+                        <circle cx="200" cy="200" r="170" stroke="#444" stroke-width="1" stroke-dasharray="4 4" fill="none" />
+                        
+                        <!-- Small orbs -->
+                        <circle cx="390" cy="200" r="6" fill="#c6ff00" />
+                        <circle cx="30" cy="200" r="6" fill="#c6ff00" />
+                        <circle cx="200" cy="370" r="6" fill="#c6ff00" />
+                        <circle cx="200" cy="30" r="6" fill="#c6ff00" />
+                    </svg>
+                </div>
+            </div>
+            
+            <a href="#how-it-works" class="how-it-works-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M19 12L12 19L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                How it works?
+            </a>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features" id="services">
+        <div class="container">
+            <h2 class="section-title">All the must haves of a <span class="highlight">restaurant AI.</span></h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icons">
+                        <div class="icon-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                <path d="M2 17l10 5 10-5"/>
+                                <path d="M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <div class="icon-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">Intelligent Conversations</h3>
+                    <p class="feature-desc">AI-powered natural language processing understands customer intent, making ordering as simple as a conversation.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icons">
+                        <div class="icon-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">Menu Generator</h3>
+                    <p class="feature-desc">Automatically convert your existing menu into an interactive conversational experience for your customers.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icons">
+                        <div class="icon-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <polyline points="21 15 16 10 5 21"/>
+                            </svg>
+                        </div>
+                        <div class="icon-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                                <line x1="12" y1="22.08" x2="12" y2="12"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">Template Library</h3>
+                    <p class="feature-desc">Pre-built conversation flows for common restaurant interactions from reservations to customer feedback.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icons">
+                        <div class="icon-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">Order Management</h3>
+                    <p class="feature-desc">Seamlessly integrate with your existing POS system or receive orders via email to streamline your workflow.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Demo Section -->
+    <section class="demo" id="about">
+        <div class="container demo-container">
+            <div class="demo-content">
+                <h2 class="demo-title">Transform restaurant ordering into natural conversations</h2>
+                <p class="demo-desc">CAISERA is an AI-powered platform that turns any restaurant process into a conversational experience. Our technology enables customers to browse menus, place orders, and make payments—all through simple, natural conversations.</p>
+                <p class="demo-desc">The AI can handle complex ordering scenarios, answer questions about menu items, and provide personalized recommendations based on customer preferences.</p>
+                <a href="#get-started" class="demo-cta">Get Started</a>
+            </div>
+            
+            <div class="demo-img">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="chat-container">
+                            <div class="chat-bubble bot">
+                                Welcome to Delicious Bites! I can help you browse our menu and place an order. What would you like to do?
+                            </div>
+                            
+                            <div class="chat-bubble user">
+                                What's on your menu?
+                            </div>
+                            
+                            <div class="chat-bubble bot">
+                                We have appetizers, main courses, desserts, and drinks. What would you like to see?
+                            </div>
+                            
+                            <div class="chat-bubble user">
+                                Show me the appetizers.
+                            </div>
+                            
+                            <div class="chat-bubble bot">
+                                Here are our appetizers:<br><br>
+                                • Garlic Bread: $5.99<br>
+                                Freshly baked bread with garlic butter<br><br>
+                                • Mozzarella Sticks: $7.99<br>
+                                Breaded mozzarella with marinara sauce<br><br>
+                                • Bruschetta: $6.99<br>
+                                Toasted bread topped with tomatoes, basil, and garlic
+                            </div>
+                            
+                            <div class="chat-bubble user">
+                                I'll have the garlic bread and a margherita pizza.
+                            </div>
+                            
+                            <div class="chat-bubble bot">
+                                Added Garlic Bread to your order. Added Margherita Pizza to your order. Anything else you'd like to add?
+                            </div>
+                            
+                            <div class="chat-bubble user">
+                                That's all. I'd like to checkout now.
+                            </div>
+                            
+                            <div class="chat-bubble bot">
+                                Great! Your order total is $18.98. Let's get your delivery information.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Process Section -->
+    <section class="process" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How it works</h2>
+            
+            <div class="process-grid">
+                <div class="process-card">
+                    <div class="process-card-number">01</div>
+                    <h3 class="process-card-title">Upload Your Menu</h3>
+                    <p class="process-card-desc">Import your restaurant menu directly from spreadsheets, POS systems, or enter it manually through our intuitive dashboard.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-card-number">02</div>
+                    <h3 class="process-card-title">Configure Your AI</h3>
+                    <p class="process-card-desc">Customize conversation flows, responses, and integrate with your existing systems for order processing.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-card-number">03</div>
+                    <h3 class="process-card-title">Deploy Anywhere</h3>
+                    <p class="process-card-desc">Integrate your AI assistant on your website, mobile app, or messaging platforms with simple APIs or no-code widgets.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-card-number">04</div>
+                    <h3 class="process-card-title">Analyze & Optimize</h3>
+                    <p class="process-card-desc">Track orders, gather customer feedback, and use AI-powered insights to optimize your menu and offerings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="process" id="insights">
+        <div class="container">
+            <h2 class="section-title">What our customers are saying</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background-color: #444; margin-right: 15px; overflow: hidden;">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 60px; height: 60px;">
+                                <rect width="24" height="24" fill="#666"/>
+                                <circle cx="12" cy="8" r="4" fill="#999"/>
+                                <path d="M20 19C20 16.2386 16.4183 14 12 14C7.58172 14 4 16.2386 4 19V22H20V19Z" fill="#999"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 18px; margin-bottom: 5px;">Sarah Thompson</h3>
+                            <p style="color: var(--primary); font-size: 14px;">Owner, The Olive Branch</p>
+                        </div>
+                    </div>
+                    <p class="feature-desc">"CAISERA has transformed how we handle orders. Our staff can focus on creating amazing food while the AI handles routine orders perfectly. We've seen a 30% increase in online orders since implementing it."</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background-color: #444; margin-right: 15px; overflow: hidden;">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 60px; height: 60px;">
+                                <rect width="24" height="24" fill="#666"/>
+                                <circle cx="12" cy="8" r="4" fill="#999"/>
+                                <path d="M20 19C20 16.2386 16.4183 14 12 14C7.58172 14 4 16.2386 4 19V22H20V19Z" fill="#999"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 18px; margin-bottom: 5px;">Michael Rodriguez</h3>
+                            <p style="color: var(--primary); font-size: 14px;">CEO, Urban Eats Group</p>
+                        </div>
+                    </div>
+                    <p class="feature-desc">"Managing orders across our 5 locations was a nightmare before CAISERA. Now we have a consistent ordering experience, fewer errors, and happier customers. The AI even upsells better than our staff!"</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background-color: #444; margin-right: 15px; overflow: hidden;">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 60px; height: 60px;">
+                                <rect width="24" height="24" fill="#666"/>
+                                <circle cx="12" cy="8" r="4" fill="#999"/>
+                                <path d="M20 19C20 16.2386 16.4183 14 12 14C7.58172 14 4 16.2386 4 19V22H20V19Z" fill="#999"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 18px; margin-bottom: 5px;">Jennifer Wu</h3>
+                            <p style="color: var(--primary); font-size: 14px;">Operations Manager, Fusion Kitchen</p>
+                        </div>
+                    </div>
+                    <p class="feature-desc">"The customer data insights from CAISERA have been invaluable. We've optimized our menu based on real ordering patterns and feedback, leading to better inventory management and higher margins."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Call to Action Section -->
+    <section class="demo">
+        <div class="container">
+            <div style="text-align: center; max-width: 700px; margin: 0 auto;">
+                <h2 class="demo-title">Ready to transform your restaurant experience?</h2>
+                <p class="demo-desc">Join hundreds of restaurants already using CAISERA to streamline operations, increase customer satisfaction, and boost revenue.</p>
+                <div style="margin-top: 40px; display: flex; justify-content: center; gap: 20px;">
+                    <a href="#get-started" class="demo-cta">Start Free Trial</a>
+                    <a href="#contact" style="display: inline-flex; align-items: center; color: var(--light-gray); text-decoration: none; font-weight: 500;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                            <path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Schedule a Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3 class="footer-title">CAISERA.</h3>
+                    <p style="color: var(--light-gray); margin-bottom: 20px;">AI-powered conversational platform for restaurants that transforms ordering into natural conversations.</p>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#legal">Legal</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#integrations">Integrations</a></li>
+                        <li><a href="#security">Security</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#documentation">Documentation</a></li>
+                        <li><a href="#support">Support</a></li>
+                        <li><a href="#api">API</a></li>
+                        <li><a href="#community">Community</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">Contact</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:info@caisera.com">info@caisera.com</a></li>
+                        <li><a href="tel:+11234567890">+1 (123) 456-7890</a></li>
+                        <li><a href="#contact">Contact Form</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 CAISERA. All rights reserved. Privacy Policy | Terms of Service
